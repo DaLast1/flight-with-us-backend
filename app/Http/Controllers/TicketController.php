@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -71,8 +72,11 @@ class TicketController extends Controller
         return Ticket::where('IdVeMayBay', '=', $IdVeMayBay)->delete();
     }
 
-    public function search($IdChuyenBay)
+    public function search(Request $request)
     {
-        return Ticket::where('IdChuyenBay', 'like', '%'.$IdChuyenBay.'%')->latest()->get();
+        if ($request["IdChuyenBay"] == '') $request["IdChuyenBay"] = -1;
+        if ($request["IdVeMayBay"] == '') $request["IdVeMayBay"] = -1;
+
+        return DB::select(DB::raw('declare @param1 int = '.$request["IdChuyenBay"].', @param2 nvarchar(100) = N\''.$request["TrangThai"].'\', @param3 int = '.$request["IdVeMayBay"].'; select * from tickets where ((@param1 = -1) or (IdChuyenBay = @param1)) and ((@param2 = \'\') or (TrangThai = @param2)) and ((@param3 = -1) or (IdVeMayBay = @param3)) order by created_at desc;'));
     }
 }
