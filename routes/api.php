@@ -22,15 +22,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['cors'])->group(function () {
-    Route::get('/token', function (Request $request) {
-        $token = $request->session()->token();
-    
-        // $token = csrf_token();
-        return $token;
-    });
-});
-
 // Public
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
