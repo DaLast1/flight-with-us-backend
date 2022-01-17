@@ -17,7 +17,7 @@ class CreatePassengersTable extends Migration
             $table->id('IdHanhKhach');
             $table->string('HoTen');
             $table->string('GioiTinh');
-            $table->string('NgaySinh');
+            $table->string('NgaySinh')->nullable();
             $table->integer('IdNguoiLienHe')->nullable();
             $table->timestamps();
         });

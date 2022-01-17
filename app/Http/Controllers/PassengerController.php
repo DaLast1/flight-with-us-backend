@@ -83,3 +83,4 @@ class PassengerController extends Controller
 }
 
 // declare @param1 int = '.$request["IdChuyenBay"].', @param2 nvarchar(100) = N\''.$request["HangHK"].'\', @param3 nvarchar(100) = N\''.$request["LoaiHinhBay"].'\', @param4_1 int = '.$kgb[0].', @param4_2 int = '.$kgb[1].'; select * from flights where ((@param1 = -1) or (IdChuyenBay = @param1)) and ((@param2 = \'\') or (HangHK = @param2)) and ((@param3 = \'\') or (LoaiHinhBay = @param3)) and ((@param4_1 = -1 and @param4_2 = -1) or (datepart(hour, ThoiGianKhoiHanh) >= @param4_1 and datepart(hour, ThoiGianKhoiHanh) <= @param4_2));
+
