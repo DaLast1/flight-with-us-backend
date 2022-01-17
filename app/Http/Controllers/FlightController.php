@@ -99,10 +99,10 @@ class FlightController extends Controller
     public function search(Request $request)
     {
         if ($request["IdChuyenBay"] == '') $request["IdChuyenBay"] = -1;
+
         if ($request["KhungGioBay"] == '') $request["KhungGioBay"] = '-1, -1';
-            
         $kgb = array_map('intval', explode(', ', $request["KhungGioBay"]));
         
-        return DB::select(DB::raw('declare @param1 int = '.$request["IdChuyenBay"].', @param2 nvarchar(100) = N\''.$request["HangHK"].'\', @param3 nvarchar(100) = N\''.$request["LoaiHinhBay"].'\', @param4_1 int = '.$kgb[0].', @param4_2 int = '.$kgb[1].', @param5 nvarchar(100) = N\''.$request["DiaDiemKhoiHanh"].'\', @param6 nvarchar(100) = N\''.$request["DiaDiemHaCanh"].'\', @param7 nvarchar(100) = N\''.$request["NgayKhoiHanh"].'\'; select * from flights where ((@param1 = -1) or (IdChuyenBay = @param1)) and ((@param2 = \'\') or (HangHK = @param2)) and ((@param3 = \'\') or (LoaiHinhBay = @param3)) and ((@param4_1 = -1 and @param4_2 = -1) or (substring(ThoiGianKhoiHanh, 17, 2) >= @param4_1 and substring(ThoiGianHaCanh, 17, 2) <= @param4_2)) and ((@param5 = \'\') or (DiaDiemKhoiHanh = @param5)) and ((@param6 = \'\') or (DiaDiemHaCanh = @param6)) and ((@param7 = \'\') or (substring(ThoiGianKhoiHanh, 0, 16) = @param7)) order by created_at desc;'));
+        return DB::select(DB::raw('declare @param1 int = '.$request["IdChuyenBay"].', @param2 nvarchar(100) = N\''.$request["HangHK"].'\', @param3 nvarchar(100) = N\''.$request["LoaiHinhBay"].'\', @param4_1 int = '.$kgb[0].', @param4_2 int = '.$kgb[1].', @param5 nvarchar(100) = N\''.$request["DiaDiemKhoiHanh"].'\', @param6 nvarchar(100) = N\''.$request["DiaDiemHaCanh"].'\', @param7 nvarchar(100) = N\''.$request["NgayKhoiHanh"].'\'; select * from flights where ((@param1 = -1) or (IdChuyenBay = @param1)) and ((@param2 = \'\') or (HangHK = @param2)) and ((@param3 = \'\') or (LoaiHinhBay = @param3)) and ((@param4_1 = -1 and @param4_2 = -1) or (substring(ThoiGianKhoiHanh, 17, 2) > @param4_1 and substring(ThoiGianKhoiHanh, 17, 2) <= @param4_2)) and ((@param5 = \'\') or (DiaDiemKhoiHanh = @param5)) and ((@param6 = \'\') or (DiaDiemHaCanh = @param6)) and ((@param7 = \'\') or (substring(ThoiGianKhoiHanh, 0, 16) = @param7)) order by created_at desc;'));
     }
 }
