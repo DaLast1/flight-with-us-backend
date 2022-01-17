@@ -124,6 +124,7 @@ class AuthController extends Controller
             
         // $kgb = array_map('intval', explode(', ', $request["KhungGioBay"]));
         
+        
         return DB::select(DB::raw('declare @param1 int = '.$request["id"].', @param2 int = '.$request["IsAdmin"].'; select * from users where ((@param1 = -1) or (id = @param1)) and ((@param2 = -1) or (IsAdmin = @param2)) order by created_at desc;'));
     }
 }
