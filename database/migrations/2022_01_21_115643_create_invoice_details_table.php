@@ -19,9 +19,9 @@ class CreateInvoiceDetailsTable extends Migration
             $table->float('ThanhTien');
             $table->float('HLKG')->nullable();
             $table->boolean('DVBS')->nullable();
-            $table->integer('IdVeMayBay')->nullable();
-            $table->integer('IdHanhKhach')->nullable();
-            $table->integer('IdHoaDon')->nullable();
+            $table->integer('IdVeMayBay');
+            $table->integer('IdHanhKhach');
+            $table->integer('IdHoaDon');
             $table->timestamps();
         });
     }

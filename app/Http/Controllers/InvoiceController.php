@@ -28,7 +28,7 @@ class InvoiceController extends Controller
     {
         $request->validate([
             'TongTien' => 'required',
-            // 'IdNguoiThanhToan' => 'required'
+            'IdNguoiThanhToan' => 'required'
         ]);
 
         return Invoice::create($request->all());

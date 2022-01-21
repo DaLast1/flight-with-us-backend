@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvoicesTable extends Migration
+class CreatePassengersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
-            $table->id('IdHoaDon');
-            $table->float('TongTien');
-            $table->integer('IdNguoiThanhToan')->nullable();
+        Schema::create('passengers', function (Blueprint $table) {
+            $table->id('IdHanhKhach');
+            $table->string('HoTen');
+            $table->string('GioiTinh');
+            $table->string('NgaySinh')->nullable();
+            $table->integer('IdNguoiLienHe');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('passengers');
     }
 }
