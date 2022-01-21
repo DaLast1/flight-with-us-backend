@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePassengersTable extends Migration
+class CreateInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePassengersTable extends Migration
      */
     public function up()
     {
-        Schema::create('passengers', function (Blueprint $table) {
-            $table->id('IdHanhKhach');
-            $table->string('HoTen');
-            $table->string('GioiTinh');
-            $table->string('NgaySinh')->nullable();
-            $table->integer('IdNguoiLienHe')->nullable();
+        Schema::create('invoices', function (Blueprint $table) {
+            $table->id('IdHoaDon');
+            $table->float('TongTien');
+            $table->integer('IdNguoiThanhToan');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePassengersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('passengers');
+        Schema::dropIfExists('invoices');
     }
 }

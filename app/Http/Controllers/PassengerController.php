@@ -29,8 +29,8 @@ class PassengerController extends Controller
         $request->validate([
             'HoTen' => 'required',
             'GioiTinh' => 'required',
-            'NgaySinh' => 'required',
-            // 'IdNguoiLienHe' => 'required'
+            // 'NgaySinh' => 'required',
+            'IdNguoiLienHe' => 'required'
         ]);
 
         return Passenger::create($request->all());
