@@ -23,26 +23,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public
-// api authentication
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// api chuyen bay 
 Route::get('/flights', [FlightController::class, 'index']);
 Route::get('/flights/{IdChuyenBay}', [FlightController::class, 'show']);
 Route::post('/flights/search', [FlightController::class, 'search']);
 
-// api ve may bay
 Route::get('/tickets', [TicketController::class, 'index']);
 Route::get('/tickets/{IdVeMayBay}', [TicketController::class, 'show']);
 Route::post('/tickets/search', [TicketController::class, 'search']);
 
-// api khach hang
 Route::get('/passengers', [PassengerController::class, 'index']);
 Route::get('/passengers/{IdHanhKhach}', [PassengerController::class, 'show']);
 Route::post('/passengers/search', [PassengerController::class, 'search']);
 
-// api nguoi dung
 Route::get('/users', [AuthController::class, 'index']);
 Route::get('/users/{IdTaiKhoan}', [AuthController::class, 'show']);
 Route::post('/users/search', [AuthController::class, 'search']);
