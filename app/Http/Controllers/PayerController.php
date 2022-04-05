@@ -82,6 +82,6 @@ class PayerController extends Controller
         return DB::select(DB::raw('with var (param1) as (values ('.$request["IdNguoiThanhToan"].')) select * from payers, var where ((param1 = -1) or ("IdNguoiThanhToan" = param1)) order by created_at desc;'));
 
         // SQL Server
-        return DB::select(DB::raw('declare @param1 int = '.$request["IdNguoiThanhToan"].'; select * from payers where ((@param1 = -1) or (IdNguoiThanhToan = @param1)) order by created_at desc;'));
+        // return DB::select(DB::raw('declare @param1 int = '.$request["IdNguoiThanhToan"].'; select * from payers where ((@param1 = -1) or (IdNguoiThanhToan = @param1)) order by created_at desc;'));
     }
 }
