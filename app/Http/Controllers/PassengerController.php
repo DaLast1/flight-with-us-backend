@@ -79,7 +79,7 @@ class PassengerController extends Controller
         return DB::select(DB::raw('with var (param1) as (values ('.$request["IdHanhKhach"].')) select * from passengers, var where ((param1 = -1) or ("IdHanhKhach" = param1)) order by created_at desc;'));
 
         // SQL Server
-        return DB::select(DB::raw('declare @param1 int = '.$request["IdHanhKhach"].'; select * from passengers where ((@param1 = -1) or (IdHanhKhach = @param1)) order by created_at desc;'));
+        // return DB::select(DB::raw('declare @param1 int = '.$request["IdHanhKhach"].'; select * from passengers where ((@param1 = -1) or (IdHanhKhach = @param1)) order by created_at desc;'));
     }
 }
 
