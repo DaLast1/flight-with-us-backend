@@ -9,6 +9,9 @@ class Flight extends Model
 {
     use HasFactory;
 
+    // PostgreSQL
+    protected $primaryKey = 'IdChuyenBay';
+
     protected $fillable = [
         'HangHK',
         'SHMayBay',

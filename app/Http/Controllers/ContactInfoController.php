@@ -76,6 +76,10 @@ class ContactInfoController extends Controller
     {
         if ($request["IdNguoiLienHe"] == '') $request["IdNguoiLienHe"] = -1;
         
-        return DB::select(DB::raw('declare @param1 int = '.$request["IdNguoiLienHe"].'; select * from contact_infos where ((@param1 = -1) or (IdNguoiLienHe = @param1)) order by created_at desc;'));
+        // PostgreSQL
+        return DB::select(DB::raw('with var (param1) as (values ('.$request["IdNguoiLienHe"].')) select * from contact_infos, var where ((param1 = -1) or ("IdNguoiLienHe" = param1)) order by created_at desc;'));
+
+        // SQL Server
+        // return DB::select(DB::raw('declare @param1 int = '.$request["IdNguoiLienHe"].'; select * from contact_infos where ((@param1 = -1) or (IdNguoiLienHe = @param1)) order by created_at desc;'));
     }
 }

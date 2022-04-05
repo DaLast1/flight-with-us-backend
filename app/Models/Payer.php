@@ -9,6 +9,9 @@ class Payer extends Model
 {
     use HasFactory;
 
+    // PostgreSQL
+    protected $primaryKey = 'IdNguoiThanhToan';
+
     protected $fillable = [
         'HoTen',
         'GioiTinh',

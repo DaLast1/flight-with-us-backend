@@ -9,6 +9,9 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    // PostgreSQL
+    protected $primaryKey = 'IdHoaDon';
+
     protected $fillable = [
         'TongTien',
         'IdNguoiThanhToan'
