@@ -9,6 +9,9 @@ class Ticket extends Model
 {
     use HasFactory;
 
+    // PostgreSQL
+    protected $primaryKey = 'IdVeMayBay';
+
     protected $fillable = [
         'LoaiVe',
         'GiaVe',

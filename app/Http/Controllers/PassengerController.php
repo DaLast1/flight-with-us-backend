@@ -73,11 +73,12 @@ class PassengerController extends Controller
 
     public function search(Request $request)
     {
-        if ($request["IdHanhKhach"] == '') $request["IdHanhKhach"] = -1;
-        // if ($request["KhungGioBay"] == '') $request["KhungGioBay"] = '-1, -1';
-            
-        // $kgb = array_map('intval', explode(', ', $request["KhungGioBay"]));
+        if ($request["IdHanhKhach"] == '') $request["IdHanhKhach"] = -1;            
         
+        // PostgreSQL
+        return DB::select(DB::raw('with var (param1) as (values ('.$request["IdHanhKhach"].')) select * from passengers, var where ((param1 = -1) or ("IdHanhKhach" = param1)) order by created_at desc;'));
+
+        // SQL Server
         return DB::select(DB::raw('declare @param1 int = '.$request["IdHanhKhach"].'; select * from passengers where ((@param1 = -1) or (IdHanhKhach = @param1)) order by created_at desc;'));
     }
 }

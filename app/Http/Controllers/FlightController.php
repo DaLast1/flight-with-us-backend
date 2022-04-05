@@ -39,10 +39,14 @@ class FlightController extends Controller
             'TongSoVe' => 'required',
             'SLVeConLai' => 'required'
         ]);
+        
+        $flight = Flight::create($request->all());
+        
+        // PostgreSQL
+        $IdChuyenBay = Flight::selectRaw('*')->orderByRaw('created_at desc')->limit(1)->get();
 
-        $flights = Flight::create($request->all());
-
-        $IdChuyenBay = Flight::selectRaw('top 1 IdChuyenBay')->orderByRaw('created_at desc')->get();
+        // SQL Server
+        // $IdChuyenBay = Flight::selectRaw('top 1 IdChuyenBay')->orderByRaw('created_at desc')->get();
 
         for ($count = 1; $count <= $request["TongSoVe"]; $count++)
         {
@@ -51,13 +55,13 @@ class FlightController extends Controller
                 'GiaVe' => '500000',
                 'MaChoNgoi' => $IdChuyenBay[0]["IdChuyenBay"] . '#' . $request["SHMayBay"] . "#" . $count,
                 'TrangThai' => 'Chưa bán',
-                'IDChuyenBay' => $IdChuyenBay[0]["IdChuyenBay"],
+                'IdChuyenBay' => $IdChuyenBay[0]["IdChuyenBay"],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
         }
 
-        return $flights;
+        return $flight;
     }
 
     /**
@@ -104,6 +108,10 @@ class FlightController extends Controller
         if ($request["KhungGioBay"] == '') $request["KhungGioBay"] = '-1, -1';
         $kgb = array_map('intval', explode(', ', $request["KhungGioBay"]));
         
-        return DB::select(DB::raw('declare @param1 int = '.$request["IdChuyenBay"].', @param2 nvarchar(100) = N\''.$request["HangHK"].'\', @param3 nvarchar(100) = N\''.$request["LoaiHinhBay"].'\', @param4_1 int = '.$kgb[0].', @param4_2 int = '.$kgb[1].', @param5 nvarchar(100) = N\''.$request["DiaDiemKhoiHanh"].'\', @param6 nvarchar(100) = N\''.$request["DiaDiemHaCanh"].'\', @param7 nvarchar(100) = N\''.$request["NgayKhoiHanh"].'\'; select * from flights where ((@param1 = -1) or (IdChuyenBay = @param1)) and ((@param2 = \'\') or (HangHK = @param2)) and ((@param3 = \'\') or (LoaiHinhBay = @param3)) and ((@param4_1 = -1 and @param4_2 = -1) or (substring(ThoiGianKhoiHanh, 17, 2) > @param4_1 and substring(ThoiGianKhoiHanh, 17, 2) <= @param4_2)) and ((@param5 = \'\') or (DiaDiemKhoiHanh = @param5)) and ((@param6 = \'\') or (DiaDiemHaCanh = @param6)) and ((@param7 = \'\') or (substring(ThoiGianKhoiHanh, 0, 16) = @param7)) order by created_at desc;'));
+        // PostgreSQL
+        return DB::select(DB::raw('with var (param1, param2, param3, param4_1, param4_2, param5, param6, param7) as (values ('.$request["IdChuyenBay"].', N\''.$request["HangHK"].'\', N\''.$request["LoaiHinhBay"].'\', '.$kgb[0].', '.$kgb[1].', N\''.$request["DiaDiemKhoiHanh"].'\', N\''.$request["DiaDiemHaCanh"].'\', N\''.$request["NgayKhoiHanh"].'\')) select * from flights, var where ((param1 = -1) or ("IdChuyenBay" = param1)) and ((param2 = \'\') or ("HangHK" = param2)) and ((param3 = \'\') or ("LoaiHinhBay" = param3)) and ((param4_1 = -1 and param4_2 = -1) or (substring("ThoiGianKhoiHanh", 17, 2)::integer > param4_1 and substring("ThoiGianKhoiHanh", 17, 2)::integer <= param4_2)) and ((param5 = \'\') or ("DiaDiemKhoiHanh" = param5)) and ((param6 = \'\') or ("DiaDiemHaCanh" = param6)) and ((param7 = \'\') or (substring("ThoiGianKhoiHanh", 0, 16) = param7)) order by created_at desc;'));
+
+        // SQL Server
+        // return DB::select(DB::raw('declare @param1 int = '.$request["IdChuyenBay"].', @param2 nvarchar(100) = N\''.$request["HangHK"].'\', @param3 nvarchar(100) = N\''.$request["LoaiHinhBay"].'\', @param4_1 int = '.$kgb[0].', @param4_2 int = '.$kgb[1].', @param5 nvarchar(100) = N\''.$request["DiaDiemKhoiHanh"].'\', @param6 nvarchar(100) = N\''.$request["DiaDiemHaCanh"].'\', @param7 nvarchar(100) = N\''.$request["NgayKhoiHanh"].'\'; select * from flights where ((@param1 = -1) or (IdChuyenBay = @param1)) and ((@param2 = \'\') or (HangHK = @param2)) and ((@param3 = \'\') or (LoaiHinhBay = @param3)) and ((@param4_1 = -1 and @param4_2 = -1) or (substring(ThoiGianKhoiHanh, 17, 2) > @param4_1 and substring(ThoiGianKhoiHanh, 17, 2) <= @param4_2)) and ((@param5 = \'\') or (DiaDiemKhoiHanh = @param5)) and ((@param6 = \'\') or (DiaDiemHaCanh = @param6)) and ((@param7 = \'\') or (substring(ThoiGianKhoiHanh, 0, 16) = @param7)) order by created_at desc;'));
     }
 }

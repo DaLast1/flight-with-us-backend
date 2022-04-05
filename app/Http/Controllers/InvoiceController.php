@@ -73,6 +73,10 @@ class InvoiceController extends Controller
     {
         if ($request["IdHoaDon"] == '') $request["IdHoaDon"] = -1;
 
-        return DB::select(DB::raw('declare @param1 int = '.$request["IdHoaDon"].'; select * from invoices where ((@param1 = -1) or (IdHoaDon = @param1)) order by created_at desc;'));
+        // PostgreSQL
+        return DB::select(DB::raw('with var (param1) as (values ('.$request["IdHoaDon"].')) select * from invoices, var where ((param1 = -1) or ("IdHoaDon" = param1)) order by created_at desc;'));
+
+        // SQL Server
+        // return DB::select(DB::raw('declare @param1 int = '.$request["IdHoaDon"].'; select * from invoices where ((@param1 = -1) or (IdHoaDon = @param1)) order by created_at desc;'));
     }
 }

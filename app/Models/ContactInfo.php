@@ -9,6 +9,9 @@ class ContactInfo extends Model
 {
     use HasFactory;
 
+    // PostgreSQL
+    protected $primaryKey = 'IdNguoiLienHe';
+
     protected $fillable = [
         'HoTen',
         'GioiTinh',

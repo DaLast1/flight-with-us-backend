@@ -119,12 +119,11 @@ class AuthController extends Controller
     public function search(Request $request)
     {
         if ($request["id"] == '') $request["id"] = -1;
-        if ($request["IsAdmin"] == '') $request["IsAdmin"] = -1;
-        // if ($request["KhungGioBay"] == '') $request["KhungGioBay"] = '-1, -1';
-            
-        // $kgb = array_map('intval', explode(', ', $request["KhungGioBay"]));
-        
-        
-        return DB::select(DB::raw('declare @param1 int = '.$request["id"].', @param2 int = '.$request["IsAdmin"].'; select * from users where ((@param1 = -1) or (id = @param1)) and ((@param2 = -1) or (IsAdmin = @param2)) order by created_at desc;'));
+
+        // PostgreSQL
+        return DB::select(DB::raw('with var (param1, param2) as (values ('.$request["id"].', \''.$request["IsAdmin"].'\')) select * from users, var where ((param1 = -1) or (id = param1)) and ((param2 = \'\') or ("IsAdmin" = param2)) order by created_at desc;'));
+
+        // SQL Server
+        // return DB::select(DB::raw('declare @param1 int = '.$request["id"].', @param2 int = '.$request["IsAdmin"].'; select * from users where ((@param1 = -1) or (id = @param1)) and ((@param2 = -1) or (IsAdmin = @param2)) order by created_at desc;'));
     }
 }

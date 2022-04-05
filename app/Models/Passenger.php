@@ -9,6 +9,9 @@ class Passenger extends Model
 {
     use HasFactory;
 
+    // PostgreSQL
+    protected $primaryKey = 'IdHanhKhach';
+
     protected $fillable = [
         'HoTen',
         'GioiTinh',
