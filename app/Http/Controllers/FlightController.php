@@ -96,6 +96,7 @@ class FlightController extends Controller
      */
     public function destroy($IdChuyenBay)
     {
+        
         Ticket::where('IdChuyenBay', '=', $IdChuyenBay)->delete();
         return Flight::where('IdChuyenBay', '=', $IdChuyenBay)->delete();
     }
